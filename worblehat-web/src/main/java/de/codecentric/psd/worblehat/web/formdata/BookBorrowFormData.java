@@ -2,6 +2,7 @@ package de.codecentric.psd.worblehat.web.formdata;
 
 import de.codecentric.psd.worblehat.web.validation.ISBN;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -9,11 +10,13 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class BookBorrowFormData {
 
-	@NotEmpty(message = "{empty.borrowCmd.isbn}") 
+	@NotEmpty(message = "{empty.borrowCmd.isbn}")
+	//@NotBlank(message = "{empty.borrowCmd.isbn}")
 	@ISBN(message = "{notvalid.borrowCmd.isbn}")
 	private String isbn;
 
 	@NotEmpty(message = "{empty.borrowCmd.email}")
+	//@NotBlank(message = "{empty.borrowCmd.email}")
 	@Email(message = "{notvalid.borrowCmd.email}")
 	private String email;
 

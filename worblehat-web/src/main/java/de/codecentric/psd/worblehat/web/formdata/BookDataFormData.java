@@ -3,6 +3,7 @@ package de.codecentric.psd.worblehat.web.formdata;
 import de.codecentric.psd.worblehat.web.validation.ISBN;
 import de.codecentric.psd.worblehat.web.validation.Numeric;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -11,22 +12,27 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class BookDataFormData {
 
 	@NotEmpty(message = "{empty.bookDataFormData.title}")
+	//@NotBlank(message = "{empty.bookDataFormData.title}")
 	private String title;
 
 	@NotEmpty(message = "{empty.bookDataFormData.edition}")
+	//@NotBlank(message = "{empty.bookDataFormData.edition}")
 	@Numeric(message = "{notvalid.bookDataFormData.edition}")
 	private String edition;
 
 	@NotEmpty(message = "{empty.bookDataFormData.yearOfPublication}")
+	//@NotBlank(message = "{empty.bookDataFormData.yearOfPublication}")
 	@Numeric(message = "{notvalid.bookDataFormData.yearOfPublication}")
 	@Length(message = "{invalid.length.bookDataFormData.yearOfPublication}", min = 4, max = 4)
 	private String yearOfPublication;
 
 	@NotEmpty(message = "{empty.bookDataFormData.isbn}")
+	//@NotBlank(message = "{empty.bookDataFormData.isbn}")
 	@ISBN(message = "{notvalid.bookDataFormData.isbn}")
 	private String isbn;
 
 	@NotEmpty(message = "{empty.bookDataFormData.author}")
+	//@NotBlank(message = "{empty.bookDataFormData.author}")
 	private String author;
 
 	public String getYearOfPublication() {

@@ -1,6 +1,7 @@
 package de.codecentric.psd.worblehat.web.formdata;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -8,7 +9,8 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class ReturnAllBooksFormData {
 
-	@NotEmpty(message = "{empty.returnAllBookFormData.emailAddress}") 
+	@NotEmpty(message = "{empty.returnAllBookFormData.emailAddress}")
+	//@NotBlank(message = "{empty.returnAllBookFormData.emailAddress}")
 	@Email(message = "{notvalid.returnAllBookFormData.emailAddress}")
 	private String emailAddress;
 
