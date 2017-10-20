@@ -15,7 +15,7 @@ public interface BookService {
 
 	List<Book> findAllBooks();
 
-	Book createBook(String title, String author, String edition, String isbn, int yearOfPublication, String description);
+	Book createBook(String title, String author, String edition, String isbn, int yearOfPublication, String description)throws IsbnTitleMismatchException;
 
 	boolean bookExists(String isbn);
 

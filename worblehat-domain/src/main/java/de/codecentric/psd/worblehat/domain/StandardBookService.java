@@ -61,8 +61,13 @@ public class StandardBookService implements BookService {
 
 
     @Override
-    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication, String description) {
+    public Book createBook(String title, String author, String edition, String isbn, int yearOfPublication, String description)
+            throws IsbnTitleMismatchException
+    {
         Book book = new Book(title, author, edition, isbn, yearOfPublication, description);
+        if(!canTheBookBeAdded(isbn,title)){
+            throw new IsbnTitleMismatchException("Unable to create multiple books with the same ISBN.");
+        }
         return bookRepository.save(book);
     }
 
@@ -77,5 +82,17 @@ public class StandardBookService implements BookService {
         bookRepository.deleteAll();
     }
 
+    boolean canTheBookBeAdded(String isbn,String title){
+        List<Book> lb=bookRepository.findBooksByIsbn(isbn);
+        if(lb==null||lb.isEmpty()){
+            return true;
+        }
+        for(Book b:lb){
+            if(b.getIsbn().equals(title)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -1,7 +1,9 @@
 package de.codecentric.psd.worblehat.web.controller;
 
-import de.codecentric.psd.worblehat.domain.BookService;
+import de.codecentric.psd.worblehat.domain.BookRepository;
 import de.codecentric.psd.worblehat.web.formdata.BookDataFormData;
+import de.codecentric.psd.worblehat.domain.Book;
+import de.codecentric.psd.worblehat.domain.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import de.codecentric.psd.worblehat.domain.IsbnTitleMismatchException;
 
+import java.util.List;
 import javax.validation.Valid;
 
 /**
@@ -43,9 +47,16 @@ public class InsertBookController {
 		if (result.hasErrors()) {
 			return "insertBooks";
 		} else {
-			bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
-					bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
-					Integer.parseInt(bookDataFormData.getYearOfPublication()), bookDataFormData.getDescription());
+			try {
+				bookService.createBook(bookDataFormData.getTitle(), bookDataFormData.getAuthor(),
+						bookDataFormData.getEdition(), bookDataFormData.getIsbn(),
+						Integer.parseInt(bookDataFormData.getYearOfPublication()), bookDataFormData.getDescription());
+			} catch (IsbnTitleMismatchException e) {
+				result.rejectValue("isbn", "duplicateIsbn");
+				return "insertBooks";
+			}
+
+
 			LOG.debug("new book instance is created: " + bookDataFormData.getIsbn());
 			return "redirect:bookList";
 		}
