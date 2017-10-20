@@ -25,8 +25,7 @@ public class HtmlBookList {
                     colums.get(2).getText(), //Year
                     colums.get(3).getText(), //Edition
                     colums.get(4).getText(), //ISBN
-                    colums.get(5).getText(), //Borrower
-                    colums.get(6).getText()); //Description
+                    colums.get(5).getText());//Borrower
             values.put(htmlBook.getIsbn(), htmlBook);
         }
     }

@@ -27,13 +27,12 @@ public class BookList {
         this.seleniumAdapter = seleniumAdapter;
     }
 
-    @Then("The booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn>, description <description>")
+    @Then("The booklist contains a book with values title <title>, author <author>, year <year>, edition <edition>, isbn <isbn>")
     public void bookListContainsRowWithValues(@Named("title") final String title,
                                               @Named("author") final String author,
                                               @Named("year") final String year,
                                               @Named("edition") final String edition,
-                                              @Named("isbn") final String isbn,
-                                              @Named("description" final String description)){
+                                              @Named("isbn") final String isbn){
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
@@ -42,7 +41,6 @@ public class BookList {
         assertThat(year, is(htmlBook.getYearOfPublication()));
         assertThat(edition, is(htmlBook.getEdition()));
         assertThat(isbn, is(htmlBook.getIsbn()));
-        assertThat(Description, is(htmlBook.getDescription()));
     }
 
     @Then("The library contains no books")
@@ -57,7 +55,7 @@ public class BookList {
                                                    @Named("isbn") final String isbn){
         Book book = DemoBookFactory.createDemoBook().build();
         Map<String, String> wantedRow = createRowMap(book.getTitle(), book.getAuthor(),
-                String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower, book.getDescription());
+                String.valueOf(book.getYearOfPublication()), book.getEdition(), isbn, borrower);
         seleniumAdapter.gotoPage(Page.BOOKLIST);
         HtmlBookList htmlBookList = seleniumAdapter.getTableContent(PageElement.BOOKLIST);
         HtmlBook htmlBook = htmlBookList.getBookByIsbn(isbn);
@@ -93,7 +91,7 @@ public class BookList {
     }
 
     private HashMap<String, String> createRowMap(final String title, final String author, final String year,
-                                                 final String edition, final String isbn, final String borrower, final String description) {
+                                                 final String edition, final String isbn, final String borrower) {
         return new HashMap<String, String>(){
             {
                 put("Title", title);
@@ -102,7 +100,6 @@ public class BookList {
                 put("Edition", edition);
                 put("ISBN", isbn);
                 put("Borrower", borrower);
-                put("Description", description)
             }
         };
     }
