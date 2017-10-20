@@ -88,7 +88,7 @@ public class StandardBookService implements BookService {
             return true;
         }
         for(Book b:lb){
-            if(b.getIsbn().equals(title)){
+            if(b.getTitle().equals(title)){
                 return true;
             }
         }
